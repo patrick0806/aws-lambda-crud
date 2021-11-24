@@ -7,13 +7,14 @@ const {
   UpdateItemCommand,
 } = require("@aws-sdk/client-dynamodb");
 const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
+const DYNAMODB_TABLE_NAME = "Worker";
 
 const getWorker = async (event) => {
   const response = { statusCode: 200 };
   try {
 
     const params = {
-      TableName: ProcessingInstruction.env.DYNAMODB_TABLE_NAME,
+      TableName: DYNAMODB_TABLE_NAME,
       key: marshall({ workerId: event.pathParameters.workerId }),
     };
 
@@ -47,7 +48,7 @@ const createWorker = async (event) => {
     const worker = JSON.parse(event.body);
     const params = {
       key: marshall({
-        TableName: ProcessingInstruction.env.DYNAMODB_TABLE_NAME,
+        TableName: DYNAMODB_TABLE_NAME,
         Item: marshall(worker || {})
       }),
     };
