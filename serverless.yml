@@ -1,0 +1,90 @@
+service: crud-api
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: sa-east-1
+  environment:
+    DYNAMODB_TABLE_NAME: ${self:custom.tableName}
+
+custom:
+  tableName: Worker
+
+plugins:
+  - serverless-iam-roles-per-function
+
+functions: 
+  getAllWorker:
+    handler: api.getAllWorker
+    name: get-all-worker
+    events:
+      - http:
+          path: workers
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+          Resource: !GetATT Workered.Arn
+  getWorker:
+    handler: api.getWorker
+    name: get-worker
+    events:
+      - http:
+          path: worker/{workerId}
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:GetItem"
+          Resource: !GetATT Workered.Arn
+  createWorker:
+    handler: api.createWorker
+    name: create-worker
+    events:
+      - http:
+          path: worker
+          method: POST
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+          Resource: !GetATT Workered.Arn
+  updateWorker:
+    handler: api.updateWorker
+    name: update-worker
+    events:
+      - http:
+          path: worker/{workerId}
+          method: PUT
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+          Resource: !GetATT Workered.Arn
+  deleteWorker:
+    handler: api.deleteWorker
+    name: delete-worker
+    events:
+      - http:
+          path: worker/{workerId}
+          method: DELETE
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+          Resource: !GetATT Workered.Arn
+
+resources:
+  Resources:
+    Worker:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+            ## make the primary key
