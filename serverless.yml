@@ -4,13 +4,12 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: sa-east-1
-  
+
 custom:
   tableName: Worker
 
 plugins:
   - serverless-iam-roles-per-function
-  - jest
 
 functions: 
   getAllWorker:
