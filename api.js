@@ -23,7 +23,7 @@ const getWorker = async (event) => {
     response.body = JSON.stringify({
       message: "Success",
       data: Item ? unmarshall(Item) : {},
-      rawData:item,
+      rawData:Item,
     });
 
   } catch (err) {
