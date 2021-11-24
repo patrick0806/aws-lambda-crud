@@ -23,7 +23,7 @@ const getWorker = async (event) => {
     response.body = JSON.stringify({
       message: "Success",
       data: Item ? unmarshall(Item) : {},
-      rawData,
+      rawData:item,
     });
 
   } catch (err) {
@@ -133,8 +133,8 @@ const updateWorker = async (event) => {
         response.statusCode = 500;
         response.body = JSON.stringify({
             message: "Fail",
-            errorMsg: e.message,
-            errorStack: e.stack,
+            errorMsg: err.message,
+            errorStack: err.stack,
         });
     }
 
@@ -153,13 +153,13 @@ const getAllWorkers = async () => {
             data: Items.map((item) => unmarshall(item)),
             Items,
         });
-    } catch (e) {
-        console.error(e);
+    } catch (err) {
+        console.error(err);
         response.statusCode = 500;
         response.body = JSON.stringify({
             message: "Failed.",
-            errorMsg: e.message,
-            errorStack: e.stack,
+            errorMsg: err.message,
+            errorStack: err.stack,
         });
     }
 
