@@ -17,7 +17,7 @@ const getWorker = async (event) => {
       key: marshall({ workerId: event.pathParameters.workerId }),
     };
 
-    const { Item } = await db.send(GetItemCommand(params));
+    const { Item } = await db.send(new GetItemCommand(params));
     console.log({ Item });
 
     response.body = JSON.stringify({
