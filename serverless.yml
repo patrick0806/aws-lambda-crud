@@ -21,6 +21,11 @@ functions:
       - http:
           path: workers
           method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+        Resource: '*'
   getWorker:
     handler: api.getWorker
     name: get-worker
@@ -28,7 +33,11 @@ functions:
       - http:
           path: worker/{workerId}
           method: GET
-    
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:GetItem"
+        Resource: '*'
   createWorker:
     handler: api.createWorker
     name: create-worker
@@ -36,13 +45,23 @@ functions:
       - http:
           path: worker
           method: POST
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: '*'
   updateWorker:
     handler: api.updateWorker
     name: update-worker
     events:
       - http:
           path: worker/{workerId}
-          method: PUT 
+          method: PUT
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: '*'
   deleteWorker:
     handler: api.deleteWorker
     name: delete-worker
@@ -50,6 +69,11 @@ functions:
       - http:
           path: worker/{workerId}
           method: DELETE
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+        Resource: '*'
 
 resources:
   Resources:
