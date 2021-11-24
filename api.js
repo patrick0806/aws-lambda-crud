@@ -90,7 +90,7 @@ const updateWorker = async (event) => {
         }), {}),
         ExpressionAttributeValues: marshall(workerKeys.reduce((acc, key, index) => ({
             ...acc,
-            [`:value${index}`]: body[key],
+            [`:value${index}`]: worker[key],
         }), {})),
     };
 
