@@ -25,7 +25,6 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:Scan"
-        Resource: !GetAtt Workered.Arn
   getWorker:
     handler: api.getWorker
     name: get-worker
@@ -37,7 +36,6 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:GetItem"
-        Resource: !GetAtt Workered.Arn
   createWorker:
     handler: api.createWorker
     name: create-worker
@@ -49,7 +47,6 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:PutItem"
-        Resource: !GetAtt Workered.Arn
   updateWorker:
     handler: api.updateWorker
     name: update-worker
@@ -61,7 +58,6 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:UpdateItem"
-        Resource: !GetAtt Workered.Arn
   deleteWorker:
     handler: api.deleteWorker
     name: delete-worker
@@ -73,7 +69,6 @@ functions:
       - Effect: "Allow"
         Action:
           - "dynamodb:DeleteItem"
-        Resource: !GetAtt Workered.Arn
 
 resources:
   Resources:
