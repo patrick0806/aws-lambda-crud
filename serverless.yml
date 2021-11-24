@@ -13,8 +13,8 @@ plugins:
 
 functions: 
   getAllWorker:
-    handler: api.getAllWorker
-    name: get-all-worker
+    handler: api.getAllWorkers
+    name: get-all-workers
     events:
       - http:
           path: workers
