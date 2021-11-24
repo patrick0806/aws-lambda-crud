@@ -94,7 +94,7 @@ const updateWorker = async (event) => {
         }), {})),
     };
 
-      const updateResult = await db.send(UpdateItemCommand(params));
+      const updateResult = await db.send(new UpdateItemCommand(params));
       if (updateResult) {
         throw new Error("fail to update user");
       }
