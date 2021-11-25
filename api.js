@@ -49,7 +49,7 @@ const createWorker = async (event) => {
         Item: marshall(worker || {}),
       }),
     };
-    console.log(params);
+    console.log(params,"table name:" + params.TableName, "Item:" + params.key);
     const createResult = await db.send(new PutItemCommand(params));
 
     if (!createResult) {
