@@ -80,7 +80,7 @@ const updateWorker = async (event) => {
       Key: marshall({ id: event.pathParameters.workersId }),
       UpdateExpression: `SET ${worker.name}= :n, ${worker.age}= :a, ${worker.role}= :r, ${worker.id} = :i`,
       ExpressionAttributeValues: marshall({
-          ":i": worker.id,
+          ":i": event.pathParameters.workerId,
           ":n": worker.name,
           ":a": worker.age,
           ":r": worker.role
