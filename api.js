@@ -14,7 +14,7 @@ const getWorker = async (event) => {
   try {
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      key: marshall({ workerId: event.pathParameters.workerId }),
+      Key: marshall({ workerId: event.pathParameters.workerId }),
     };
 
     const { Item } = await db.send(new GetItemCommand(params));
@@ -45,7 +45,7 @@ const createWorker = async (event) => {
     const worker = JSON.parse(event.body);
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      key: marshall({
+      Key: marshall({
         Item: marshall(worker || {}),
       }),
     };
@@ -83,7 +83,7 @@ const updateWorker = async (event) => {
 
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      key: marshall({ workerId: event.pathParameters.workersId }),
+      Key: marshall({ workerId: event.pathParameters.workersId }),
       UpdateExpression: `SET ${workerKeys
         .map((_, index) => `#key${index} = :value${index}`)
         .join(", ")}`,
