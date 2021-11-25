@@ -23,7 +23,6 @@ const getWorker = async (event) => {
     response.body = JSON.stringify({
       message: "Success",
       data: Item ? unmarshall(Item) : {},
-      rawData: Item,
     });
   } catch (err) {
     console.error(err);
@@ -56,7 +55,6 @@ const createWorker = async (event) => {
 
     response.body = JSON.stringify({
       message: "Success",
-      createResult,
     });
   } catch (err) {
     console.error(err);
@@ -131,7 +129,7 @@ const deleteWorker = async (event) => {
   try {
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      Key: marshall({ workerId: event.pathParameters.workerId }),
+      Key: marshall({ id: event.pathParameters.workerId }),
     };
     const deleteResult = await db.send(new DeleteItemCommand(params));
 
