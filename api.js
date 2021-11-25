@@ -82,7 +82,7 @@ const updateWorker = async (event) => {
     const workerKeys = Object.key(worker);
 
     const params = {
-      TableName: process.env.DYNAMODB_TABLE_NAME,
+      TableName: DYNAMODB_TABLE_NAME,
       key: marshall({ workerId: event.pathParameters.workersId }),
       UpdateExpression: `SET ${workerKeys
         .map((_, index) => `#key${index} = :value${index}`)
@@ -133,7 +133,7 @@ const deleteWorker = async (event) => {
 
   try {
     const params = {
-      TableName: process.env.DYNAMODB_TABLE_NAME,
+      TableName: DYNAMODB_TABLE_NAME,
       Key: marshall({ workerId: event.pathParameters.workerId }),
     };
     const deleteResult = await db.send(new DeleteItemCommand(params));
@@ -160,7 +160,7 @@ const getAllWorkers = async () => {
 
   try {
     const { Items } = await db.send(
-      new ScanCommand({ TableName: process.env.DYNAMODB_TABLE_NAME })
+      new ScanCommand({ TableName: DYNAMODB_TABLE_NAME })
     );
 
     response.body = JSON.stringify({
