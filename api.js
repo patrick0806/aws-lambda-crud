@@ -1,12 +1,12 @@
 const db = require("./db");
 const {
-  GetItemCommand,
-  PutItemCommand,
-  DeleteItemCommand,
+  GetCommand,
+  PutCommand,
+  DeleteCommand,
   ScanCommand,
-  UpdateItemCommand,
-} = require("@aws-sdk/client-dynamodb");
-const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
+  UpdateCommand,
+} = require("@aws-sdk/lib-dynamodb");
+//const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 const DYNAMODB_TABLE_NAME = "Worker";
 
 const getWorker = async (event) => {
@@ -14,10 +14,10 @@ const getWorker = async (event) => {
   try {
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      Key: marshall({ id: event.pathParameters.workerId }),
+      Key: { id: event.pathParameters.workerId },
     };
 
-    const { Item } = await db.send(new GetItemCommand(params));
+    const { Item } = await db.get(new GetCommand(params));
     console.log({ Item });
 
     response.body = JSON.stringify({
@@ -44,10 +44,10 @@ const createWorker = async (event) => {
     const worker = JSON.parse(event.body);
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      Item: marshall({id:Math.random().toString(),...worker }|| {}),
+      Item: {id:Math.random().toString(),...worker }|| {},
     };
 
-    const createResult = await db.send(new PutItemCommand(params));
+    const createResult = await db.send(new PutCommand(params));
 
     if (!createResult) {
       throw new Error("fail to create user");
@@ -78,7 +78,7 @@ const updateWorker = async (event) => {
 
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      Item: marshall({ id: event.pathParameters.workersId }),
+      Item: { id: event.pathParameters.workersId },
       UpdateExpression: `SET ${workerKeys
         .map((_, index) => `#key${index} = :value${index}`)
         .join(", ")}`,
@@ -100,7 +100,7 @@ const updateWorker = async (event) => {
       ),
     };
 
-    const updateResult = await db.send(new UpdateItemCommand(params));
+    const updateResult = await db.send(new UpdateCommand(params));
 
     if (!updateResult) {
       throw new Error("fail to update user");
@@ -129,9 +129,9 @@ const deleteWorker = async (event) => {
   try {
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      Key: marshall({ id: event.pathParameters.workerId }),
+      Key: { id: event.pathParameters.workerId },
     };
-    const deleteResult = await db.send(new DeleteItemCommand(params));
+    const deleteResult = await db.send(new DeleteCommand(params));
 
     response.body = JSON.stringify({
       message: "Success",
@@ -161,7 +161,6 @@ const getAllWorkers = async () => {
     response.body = JSON.stringify({
       message: "Successfully",
       data: Items.map((item) => unmarshall(item)),
-      Items,
     });
   } catch (err) {
     console.error(err);
