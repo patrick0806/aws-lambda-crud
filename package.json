@@ -11,6 +11,7 @@
     "@aws-sdk/util-dynamodb": "^3.42.0",
     "i": "^0.3.7",
     "npm": "^8.1.4",
+    "rm": "^0.1.8",
     "serverless-iam-roles-per-function": "^3.2.0"
   },
   "devDependencies": {
