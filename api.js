@@ -74,30 +74,16 @@ const updateWorker = async (event) => {
   const response = { statusCode: 200 };
   try {
     const worker = JSON.parse(event.body);
-    const workerKeys = Object.key(worker);
 
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      Item: marshall({ id: event.pathParameters.workersId }),
-      UpdateExpression: `SET ${workerKeys
-        .map((_, index) => `#key${index} = :value${index}`)
-        .join(", ")}`,
-      ExpressionAttributeNames: workerKeys.reduce(
-        (acc, key, index) => ({
-          ...acc,
-          [`#key${index}`]: key,
-        }),
-        {}
-      ),
-      ExpressionAttributeValues: marshall(
-        workerKeys.reduce(
-          (acc, key, index) => ({
-            ...acc,
-            [`:value${index}`]: worker[key],
-          }),
-          {}
-        )
-      ),
+      Key: marshall({ id: event.pathParameters.workersId }),
+      UpdateExpression: `SET ${worker.name}= :n, ${worker.age}= :a, ${worker.role}= :r`,
+      ExpressionAttributeValues: marshall({
+          ":n": worker.name,
+          ":a": worker.age,
+          ":r": worker.role
+      }),
     };
 
     const updateResult = await db.send(new UpdateItemCommand(params));
