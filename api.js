@@ -14,10 +14,10 @@ const getWorker = async (event) => {
   try {
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      Key: marshall({ workerId: event.pathParameters.workerId }),
+      Key: marshall({ id: event.pathParameters.workerId }),
     };
 
-    const { Item } = await db.send(new GetItemCommand(params));
+    const { Item } = await db.getItem(params);
     console.log({ Item });
 
     response.body = JSON.stringify({
