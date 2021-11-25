@@ -45,7 +45,7 @@ const createWorker = async (event) => {
     const worker = JSON.parse(event.body);
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      Item: marshall({key:Math.random(),...worker }|| {}),
+      Item: marshall({id:Math.random(),...worker }|| {}),
     };
 
     const createResult = await db.send(new PutItemCommand(params));
