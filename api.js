@@ -80,7 +80,7 @@ const updateWorker = async (event) => {
 
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      Key: marshall({ workerId: event.pathParameters.workersId }),
+      Item: marshall({ id: event.pathParameters.workersId }),
       UpdateExpression: `SET ${workerKeys
         .map((_, index) => `#key${index} = :value${index}`)
         .join(", ")}`,
