@@ -45,9 +45,7 @@ const createWorker = async (event) => {
     const worker = JSON.parse(event.body);
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      Key: marshall({
-        Item: marshall(worker || {}),
-      }),
+      Key: marshall(worker || {}),
     };
     console.log(params,"table name:" + params.TableName, "Item:",JSON.parse(event.body));
 
