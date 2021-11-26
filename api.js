@@ -9,7 +9,7 @@ const {
 const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 const DYNAMODB_TABLE_NAME = "Worker";
 const marshallOptions = {
-    removeUndefinedValues: boolean,
+    removeUndefinedValues: true,
   }
 
 const getWorker = async (event) => {
