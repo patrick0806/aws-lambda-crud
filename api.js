@@ -9,7 +9,7 @@ const {
 const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 const DYNAMODB_TABLE_NAME = "Worker";
 const marshallOptions = {
-    removeUndefinedValues: true,
+    removeUndefinedValues = true,
   }
 
 const getWorker = async (event) => {
@@ -88,7 +88,7 @@ const updateWorker = async (event) => {
           ":a": worker.age,
           ":r": worker.role,
         },
-        marshallOptions
+        {removeUndefinedValues = true}
       ),
     };
 
