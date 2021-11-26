@@ -18,7 +18,6 @@ const getWorker = async (event) => {
     };
 
     const { Item } = await db.send(new GetItemCommand(params));
-    console.log({ Item });
 
     response.body = JSON.stringify({
       message: "Success",
@@ -41,7 +40,6 @@ const getWorker = async (event) => {
 const createWorker = async (event) => {
   const response = { statusCode: 200 };
   try {
-      console.log(event);
     const worker = JSON.parse(event.body);
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
@@ -80,15 +78,11 @@ const updateWorker = async (event) => {
       TableName: DYNAMODB_TABLE_NAME,
       Key: marshall({ id: event.pathParameters.workersId }),
       UpdateExpression: `SET ${worker.name}= :n, ${worker.age}= :a, ${worker.role}= :r`,
-      ExpressionAttributeValues: marshall(
-        {
-          ":n": worker.name,
-          ":a": worker.age,
-          ":r": worker.role,
-        },
-        
-      ),
-
+      ExpressionAttributeValues: marshall({
+        ":n": worker.name,
+        ":a": worker.age,
+        ":r": worker.role,
+      }),
     };
 
     const updateResult = await db.send(new UpdateItemCommand(params));
