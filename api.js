@@ -44,7 +44,7 @@ const createWorker = async (event) => {
     const worker = JSON.parse(event.body);
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
-      Item: marshall({id:Math.random().toString(),...worker }|| {}),
+      Item: marshall({ id: Math.random().toString(), ...worker } || {}),
     };
 
     const createResult = await db.send(new PutItemCommand(params));
@@ -78,13 +78,15 @@ const updateWorker = async (event) => {
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
       Key: marshall({ id: event.pathParameters.workersId }),
-      UpdateExpression: `SET ${worker.name}= :n, ${worker.age}= :a, ${worker.role}= :r, ${worker.id} = :i`,
-      ExpressionAttributeValues: marshall({
-          ":i": event.pathParameters.workerId,
+      UpdateExpression: `SET ${worker.name}= :n, ${worker.age}= :a, ${worker.role}= :r`,
+      ExpressionAttributeValues: marshall(
+        {
           ":n": worker.name,
           ":a": worker.age,
-          ":r": worker.role
-      }),
+          ":r": worker.role,
+        },
+        { removeUndefinedValues: true }
+      ),
     };
 
     const updateResult = await db.send(new UpdateItemCommand(params));
