@@ -8,9 +8,6 @@ const {
 } = require("@aws-sdk/client-dynamodb");
 const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 const DYNAMODB_TABLE_NAME = "Worker";
-const marshallOptions = {
-    removeUndefinedValues = true,
-  }
 
 const getWorker = async (event) => {
   const response = { statusCode: 200 };
@@ -87,10 +84,11 @@ const updateWorker = async (event) => {
           ":n": worker.name,
           ":a": worker.age,
           ":r": worker.role,
-        },{}
+        },
+        { }
       ),
     };
-    
+
     const updateResult = await db.send(new UpdateItemCommand(params));
 
     if (!updateResult) {
