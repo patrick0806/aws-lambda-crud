@@ -82,14 +82,15 @@ const updateWorker = async (event) => {
       TableName: DYNAMODB_TABLE_NAME,
       Key: marshall({ id: event.pathParameters.workersId }),
       UpdateExpression: `SET ${worker.name}= :n, ${worker.age}= :a, ${worker.role}= :r`,
-      ExpressionAttributeValues: 
+      ExpressionAttributeValues: marshall(
         {
           ":n": worker.name,
           ":a": worker.age,
           ":r": worker.role,
-        },
+        },{}
+      ),
     };
-
+    
     const updateResult = await db.send(new UpdateItemCommand(params));
 
     if (!updateResult) {
