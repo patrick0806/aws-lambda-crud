@@ -41,6 +41,7 @@ const getWorker = async (event) => {
 const createWorker = async (event) => {
   const response = { statusCode: 200 };
   try {
+      console.log(event);
     const worker = JSON.parse(event.body);
     const params = {
       TableName: DYNAMODB_TABLE_NAME,
@@ -85,8 +86,9 @@ const updateWorker = async (event) => {
           ":a": worker.age,
           ":r": worker.role,
         },
-        { }
+        
       ),
+
     };
 
     const updateResult = await db.send(new UpdateItemCommand(params));

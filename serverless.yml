@@ -3,7 +3,7 @@ service: crud-api
 provider:
   name: aws
   runtime: nodejs14.x
-  region: sa-east-1
+  region: sa-east-1 #sp
 
 custom:
   tableName: Worker

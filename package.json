@@ -5,13 +5,12 @@
   "repository": "https://github.com/patrick0806/aws-lambda-crud.git",
   "author": "patrick <patrickk0806@hotmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest --config ./test/jest-e2e.json"
+  },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.42.0",
-    "@aws-sdk/lib-dynamodb": "^3.42.0",
     "@aws-sdk/util-dynamodb": "^3.42.0",
-    "i": "^0.3.7",
-    "npm": "^8.1.4",
-    "rm": "^0.1.8",
     "serverless-iam-roles-per-function": "^3.2.0"
   },
   "devDependencies": {
